@@ -1,22 +1,39 @@
 server:
-  port: 8761
+  port: 9001
 
 spring:
   application:
-    name: subrental-discovery-server
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: subrental-order
+          uri: lb://subrental-order
+          predicates:
+            - Path=/api/orders/**
+        - id: subrental-billing
+          uri: lb://subrental-billing
+          predicates:
+            - Path=/api/billings/**
+        - id: subrental-orderproduct
+          uri: lb://subrental-orderproduct
+          predicates:
+            - Path=/api/orderproducts/**
+        - id: subrental-product
+          uri: lb://subrental-product
+          predicates:
+            - Path=/api/products/**
+      default-filters:
+        - name: GlobalAuthFilter
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
-  server:
-    # 서버가 요청을 받기 전 대기할 초기 시간(ms)
-    # default 5분 : 실무에서는 보통 모든 서비스가 등록 되길 기다리기 위해 5분 후 정보를 공유
-    # 개인 프로젝트인 만큼 빠른 등록을 위해 5ms로 설정
-    wait-time-in-ms-when-sync-empty: 5
+      defaultZone: http://localhost:8761/eureka
 
 management:
   endpoints:
