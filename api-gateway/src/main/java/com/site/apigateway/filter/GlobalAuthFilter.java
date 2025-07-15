@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class GlobalAuthFilter extends AbstractGatewayFilterFactory<GlobalAuthFilter.Config> {
 
-    private final List<String> excludeUris = List.of("/api/orders/test");
+    private final List<String> excludeUris = List.of("/api/**");
 
     public GlobalAuthFilter() {
         super(Config.class);

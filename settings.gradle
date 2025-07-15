@@ -1,8 +1,9 @@
 rootProject.name = 'subrental'
 
-include 'billing'
-include 'order'
-include 'orderproduct'
-include 'product'
+include 'subrental-billing'
+include 'subrental-order'
+include 'subrental-orderproduct'
+include 'subrental-product'
+include 'subrental-core'
 include 'api-gateway'
 include 'eureka-server'
