@@ -24,4 +24,13 @@ public class OrderController {
 
         return List.of(response, response, response, response, response);
     }
+
+    @GetMapping("/fail")
+    public String fail(@RequestParam("contractDate") String contractDate) {
+        if (contractDate == null || contractDate.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        return contractDate;
+    }
 }

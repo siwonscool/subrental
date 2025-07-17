@@ -1,9 +1,17 @@
 server:
   port: 8011
 
+logging:
+  level:
+    io.github.resilience4j.bulkhead: DEBUG
+
 spring:
   application:
     name: subrental-billing
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
 eureka:
   instance:
@@ -19,3 +27,29 @@ management:
     web:
       exposure:
         include: "*"
+
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        failure-rate-threshold: 50
+        slow-call-rate-threshold: 80
+        slow-call-duration-threshold: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        max-wait-duration-in-half-open-state: 0
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 10
+        wait-duration-in-open-state: 10s
+  bulkhead:
+    configs:
+      default:
+        max-concurrent-calls: 5
+        max-wait-duration: 0ms
+    instances:
+      subrental-billing:
+        base-config: default

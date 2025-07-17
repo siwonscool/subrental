@@ -23,7 +23,6 @@ jar { enabled = false }
 dependencies {
     // Core Module
     implementation project(':subrental-core')
-
 }
 
 tasks.named('test') {
