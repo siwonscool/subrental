@@ -23,6 +23,7 @@ jar { enabled = false }
 dependencies {
     // Core Module
     implementation project(':subrental-core')
+    runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {
